@@ -360,30 +360,38 @@ fn paint_line(
         }
 
         let mut last_line_end_x = first_glyph_x + layout.width;
+        let mut last_line_end_x_before = glyph_origin.x;
         if let Some(boundary) = wrap_boundaries.last() {
             let run = &layout.runs[boundary.run_ix];
             let glyph = &run.glyphs[boundary.glyph_ix];
             last_line_end_x -= glyph.position.x;
+            last_line_end_x_before -= glyph.position.x;
         }
 
         if let Some((mut underline_start, underline_style)) = current_underline.take() {
-            if last_line_end_x == underline_start.x {
+            if last_line_end_x_before == underline_start.x {
+                panic!();
                 underline_start.x -= max_glyph_size.width.half()
             };
+            eprintln!("-------------");
+            eprintln!("start = {:?}", underline_start);
+            eprintln!("end_before = {}", last_line_end_x - underline_start.x);
+            eprintln!("end_after = {}", last_line_end_x_before - underline_start.x);
             window.paint_underline(
                 underline_start,
-                last_line_end_x - underline_start.x,
+                last_line_end_x_before - underline_start.x,
                 &underline_style,
             );
         }
 
         if let Some((mut strikethrough_start, strikethrough_style)) = current_strikethrough.take() {
             if last_line_end_x == strikethrough_start.x {
+                panic!();
                 strikethrough_start.x -= max_glyph_size.width.half()
             };
             window.paint_strikethrough(
                 strikethrough_start,
-                last_line_end_x - strikethrough_start.x,
+                last_line_end_x_before - strikethrough_start.x,
                 &strikethrough_style,
             );
         }
