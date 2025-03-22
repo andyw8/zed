@@ -156,20 +156,6 @@ Ruby LSP uses pull-based diagnostics which Zed doesn't support yet. We can tell 
 }
 ```
 
-By default, Ruby LSP does not use `bundle exec` to run in the context of the bundle. To enable that, you can use the `use_bundler` configuration option:
-
-```json
-{
-  "lsp": {
-    "ruby-lsp": {
-      "settings": {
-        "use_bundler": true
-      }
-    }
-  }
-}
-```
-
 ## Setting up `rubocop` LSP
 
 Zed currently doesn't install `rubocop` automatically. To use `rubocop`, you need to install the gem. Zed just looks for an executable called `rubocop` on your `PATH`.
