@@ -2,32 +2,28 @@
 
 Ruby support is available through the [Ruby extension](https://github.com/zed-extensions/ruby).
 
-- Tree-sitters:
+It also provides support for ERB files.
+
+## Tree-sitters:
   - [tree-sitter-ruby](https://github.com/tree-sitter/tree-sitter-ruby)
   - [tree-sitter-embedded-template](https://github.com/tree-sitter/tree-sitter-embedded-template)
-- Language Servers:
-  - [ruby-lsp](https://github.com/Shopify/ruby-lsp)
-  - [solargraph](https://github.com/castwide/solargraph)
-  - [rubocop](https://github.com/rubocop/rubocop)
-
-The Ruby extension also provides support for ERB files.
 
 ## Language Servers
 
-There are multiple language servers available for Ruby. Zed supports the two following:
+There are multiple language servers available for Ruby. Zed supports the following:
 
 - [solargraph](https://github.com/castwide/solargraph)
 - [ruby-lsp](https://github.com/Shopify/ruby-lsp)
+- [rubocop](https://github.com/rubocop/rubocop)
 
-They both have an overlapping feature set of autocomplete, diagnostics, code actions, etc. and it's up to you to decide which one you want to use. Note that you can't use both at the same time.
+Solargraph and Ruby LSP have an overlapping feature set of autocomplete, diagnostics, code actions, etc.
+You should avoid using both at the same time as it may result in conflicting behavior.
 
-In addition to these two language servers, Zed also supports [rubocop](https://github.com/rubocop/rubocop) which is a static code analyzer and linter for Ruby. Under the hood, it's also used by Zed as a language server, but its functionality is complimentary to that of solargraph and ruby-lsp.
+RuboCop's language server overlaps with Solargraph and Ruby LSP but its functionality is complimentary.
 
 When configuring a language server, it helps to open the LSP Logs window using the 'debug: open language server logs' command. You can then choose the corresponding language instance to see any logged information.
 
 ## Configuring a language server
-
-The [Ruby extension](https://github.com/zed-extensions/ruby) offers both `solargraph` and `ruby-lsp` language server support.
 
 ### Using `solargraph`
 
@@ -41,37 +37,23 @@ To switch to `ruby-lsp`, add the following to your `settings.json`:
 {
   "languages": {
     "Ruby": {
-      "language_servers": ["ruby-lsp", "!solargraph", "!rubocop", "..."]
+      "language_servers": ["ruby-lsp"]
     }
   }
 }
 ```
-
-That disables `solargraph` and `rubocop` and enables `ruby-lsp`.
 
 ### Using `rubocop`
 
 The Ruby extension also provides support for `rubocop` language server for offense detection and autocorrection.
 
-To enable it, add the following to your `settings.json`:
+To enable it, add it to your `settings.json`, for example:
 
 ```json
 {
   "languages": {
     "Ruby": {
-      "language_servers": ["ruby-lsp", "rubocop", "!solargraph", "..."]
-    }
-  }
-}
-```
-
-Or, conversely, you can disable `ruby-lsp` and enable `solargraph` and `rubocop` by adding the following to your `settings.json`:
-
-```json
-{
-  "languages": {
-    "Ruby": {
-      "language_servers": ["solargraph", "rubocop", "!ruby-lsp", "..."]
+      "language_servers": ["ruby-lsp", "rubocop"]
     }
   }
 }
@@ -142,7 +124,7 @@ Ruby LSP uses pull-based diagnostics which Zed doesn't support yet. We can tell 
 {
   "languages": {
     "Ruby": {
-      "language_servers": ["ruby-lsp", "!solargraph", "..."]
+      "language_servers": ["ruby-lsp"]
     }
   },
   "lsp": {
@@ -197,14 +179,14 @@ You can install the gem manually with the following command:
 gem install rubocop
 ```
 
-Rubocop has unsafe autocorrection disabled by default. We can tell Zed to enable it by adding the following to your `settings.json`:
+RuboCop has unsafe autocorrection disabled by default. We can tell Zed to enable it by adding the following to your `settings.json`:
 
 ```json
 {
   "languages": {
     "Ruby": {
       // Use ruby-lsp as the primary language server and rubocop as the secondary.
-      "language_servers": ["ruby-lsp", "rubocop", "!solargraph", "..."]
+      "language_servers": ["ruby-lsp", "rubocop"]
     }
   },
   "lsp": {
@@ -248,7 +230,7 @@ In order to do that, you need to configure the language server so that it knows 
 {
   "languages": {
     "Ruby": {
-      "language_servers": ["tailwindcss-language-server", "..."]
+      "language_servers": ["tailwindcss-language-server", "solargraph"]
     }
   },
   "lsp": {
